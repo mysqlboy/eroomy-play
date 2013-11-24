@@ -3,7 +3,7 @@
 - name: install packages
   yum: pkg=$item state=installed
   sudo: yes
-  with_tems: 
+  with_items: 
       - vim-enhanced
       - screen
   tags: 
@@ -18,9 +18,9 @@
       - common_repos
 
 - name: Install the repo RPMs 
-        action: command rpm -Uvh --force /tmp/$item
-        with_items:
-        - epel-release-6-8.noarch.rpm
-        - percona-release-0.0-1.x86_64.rpm
+  shell: command rpm -Uvh --force /tmp/$item
+  with_items:
+    - epel-release-6-8.noarch.rpm
+    - percona-release-0.0-1.x86_64.rpm
 
 

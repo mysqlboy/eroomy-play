@@ -9,7 +9,7 @@
     - percona-xtrabackup.x86_64
 
 - name: start mysql
-  notify: restart mysql
   sudo: yes
+  service: name=mysql state=started
   tags: 
     - start mysql
