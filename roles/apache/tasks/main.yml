@@ -1,0 +1,11 @@
+---
+# file roles/apache/tasks/main.yml
+- name: install apache
+  yum: pkg=httpd state=installed
+
+- name: restart apache
+  notify: restart apache
+  sudo: yes
+  - tags:
+    - start mysql
+  

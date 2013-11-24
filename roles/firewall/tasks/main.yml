@@ -1,0 +1,15 @@
+---
+# file roles/iptables/tasks/main.yml
+- name: install percona-server
+  yum: pkg=$item state=installed
+  with_items:
+    - iptables
+
+- name: allow firewall authorized ports
+  sudo: yes
+  action: shell iptables -I INPUT -p tcp --dport {{ item }} -j ACCEPT
+  with_items:
+    - 22
+    - 80
+  tags:
+    - firewall

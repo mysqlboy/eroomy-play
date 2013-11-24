@@ -1,0 +1,15 @@
+---
+# file roles/mysql/tasks/main.yml
+- name: install percona-server
+  yum: pkg=$item state=installed
+  with_items:
+    - Percona-Server-server-56.x86_64
+    - Percona-Server-shared-56.x86_64
+    - MySQL-python.x86_64
+    - percona-xtrabackup.x86_64
+
+- name: start mysql
+  notify: restart mysql
+  sudo: yes
+  tags: 
+    - start mysql

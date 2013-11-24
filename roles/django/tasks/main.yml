@@ -1,0 +1,9 @@
+---
+# file: roles/django/tasks/main.yml
+- name: install django
+  yum: name=Django14.noarch state=installed
+  sudo: yes
+  tags:
+    - install django
+
+

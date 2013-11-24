@@ -1,0 +1,26 @@
+# install common components needed
+---
+- name: install packages
+  yum: pkg=$item state=installed
+  sudo: yes
+  with_tems: 
+      - vim-enhanced
+      - screen
+  tags: 
+    - common_pkgs
+
+- name: grab epel and percona repos
+  action: get_url dest=/tmp/ url=$item
+  with_items: 
+      - http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+      - http://www.percona.com/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
+  tags:
+      - common_repos
+
+- name: Install the repo RPMs 
+        action: command rpm -Uvh --force /tmp/$item
+        with_items:
+        - epel-release-6-8.noarch.rpm
+        - percona-release-0.0-1.x86_64.rpm
+
+

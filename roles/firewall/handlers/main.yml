@@ -1,0 +1,7 @@
+---
+# file roles/firewall/tasks/main.yml
+- name: restart mysql
+  notify: restart mysql
+  sudo: yes
+  tags: 
+    - start iptables
