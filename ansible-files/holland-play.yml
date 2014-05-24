@@ -1,0 +1,19 @@
+- hosts: holland-backup
+  sudo: yes
+  tasks: 
+   - yum: name=unzip state=installed
+   - yum: name=python-setuptools.noarch state=installed
+   - yum: name=MySQL-python.x86_64 state=installed
+   - unarchive: src=/var/spool/downloads/holland-master.zip dest=/usr/local/
+   - file: path=/etc/holland/backupsets state=present mode=0644 state=directory
+   - file: path=/var/log/holland  state=present mode=0644 state=directory
+   - file: path=/var/spool/holland state=present mode=0644 state=directory
+   - shell: "cd /usr/local/holland-master/; /usr/bin/python setup.py install"
+   - shell: "cd /usr/local/holland-master/plugins/holland.lib.common/; python setup.py install"
+   - shell: "cd /usr/local/holland-master/plugins/holland.lib.common/; python setup.py install"
+   - shell: "cd /usr/local/holland-master/plugins/holland.backup.xtrabackup/; python setup.py install"
+   - shell: "cd /usr/local/holland-master/plugins/holland.backup.mysqldump/; python setup.py install"
+   - template: src=/etc/ansible/roles/hollandbackup/templates/holland.conf.j2 dest=/etc/holland/holland.conf
+   - template: src=/etc/ansible/roles/hollandbackup/templates/mysqldump.conf.j2 dest=/etc/holland/backupsets/mysqldump.conf
+   - template: src=/etc/ansible/roles/hollandbackup/templates/xtrabackup.conf.j2 dest=/etc/holland/backupsets/xtrabackup.conf
+

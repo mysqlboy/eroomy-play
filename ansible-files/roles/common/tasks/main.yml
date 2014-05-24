@@ -1,0 +1,24 @@
+---
+# file: roles/common/tasks/main.yml
+- name: Install Common Packages
+  sudo: yes
+  yum: name={{ item }} state=latest
+  with_items: 
+    - vim
+    - screen
+    - unzip
+    - MySQL-python.x86_64 
+
+- name: User management Andy
+  sudo: yes
+  user: name=andymoore comment="Andrew Moore" password="$6$sdLwOqculIY/5$fTNEGr3PysSZctdtK4HiJ1iRgNjkPZFhduWiDGxfv8eRe/nK7BURCdWqwH.YwlMVbOJ5J85XjKwi2tOkl0YSw/" createhome=yes
+
+- name: Add Users
+  sudo: yes
+  user: name={{ item }} createhome=no update_password=on_create state=present
+  with_items:
+    - jonhunter
+    - markpillow
+    - adrianegginton
+    - adambialy
+    - jonwhite

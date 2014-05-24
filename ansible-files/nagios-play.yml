@@ -1,0 +1,5 @@
+- hosts: xportalRS
+  roles:     
+        - common
+        - nagios-common
+

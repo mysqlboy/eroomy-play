@@ -1,0 +1,37 @@
+---
+# file: roles/perconaserver/tasks/main.yml
+- name: Install Percona Server Repository
+  sudo: yes
+  yum: name=http://www.percona.com/downloads/percona-release/percona-release-0.0-1.x86_64.rpm state=present
+  
+- name: Install Percona Server
+  sudo: yes
+  yum: name={{ item }} state=latest
+  with_items: 
+    - Percona-Server-client-56.x86_64
+    - Percona-Server-server-56.x86_64
+    - Percona-Server-shared-56.x86_64
+  
+- name: Deploy my.cnf File
+  sudo: yes
+  template: src=my.cnf.j2 dest=/etc/my.cnf owner=mysql group=mysql mode=0650  
+  notify: 
+    - restart percona
+
+- name: Push MySQL users
+  mysql_db: db=test state=absent
+
+- name: Push MySQL users
+  mysql_user: name="" host="$server_hostname" state="absent"
+
+- name: Push MySQL users
+  mysql_user: name="" state="absent"
+
+- name: Push MySQL users
+  mysql_user: name=NAGIOS host='91.151.6.10' password=Nag10s priv=*.*:'PROCESS,REPLICATION CLIENT,SELECT' state=absent
+
+- name: Push MySQL users
+  mysql_user: name=NAGIOS host='91.151.%' password=Nag10s priv=*.*:'PROCESS,REPLICATION CLIENT,SELECT' state=present
+
+- name: Push MySQL users
+  mysql_user: name=dbadmin host='91.%' password='Ra5t@laMB0_' priv=*.*:'ALL' state=present

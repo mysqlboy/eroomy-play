@@ -1,0 +1,17 @@
+- name: Pushes configuration
+  template: src=my.cnf.j2 dest=/root/.my.cnf mode=0640 owner=root group=root
+  sudo: yes
+
+#- name: open firewall port to allow nagios to connect
+#  sudo: yes
+#  command: /sbin/iptables -A INPUT  -m state --state NEW -m tcp -p tcp --dport {{ item }} -s 91.151.6.10 -j ACCEPT
+#  with_items:
+#    - 3306
+#  tags:
+#    - firewall
+  #notify:
+  #  - restartiptables
+
+- name: Push Nagios MySQL user out
+  mysql_user: name=NAGIOS host='91.151.6.10' password=Nag10s priv=*.*:'PROCESS,REPLICATION CLIENT,SELECT' state=absent
+  mysql_user: name=NAGIOS host='91.151.%' password=Nag10s priv=*.*:'PROCESS,REPLICATION CLIENT,SELECT' state=present

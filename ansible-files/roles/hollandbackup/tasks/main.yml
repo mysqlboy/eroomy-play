@@ -1,0 +1,7 @@
+---
+# file: roles/hollandbackup/tasks/main.yml
+- name: unpack holland backup framework
+  unarchive: src=/var/spool/downloads/holland-master.zip dest=/usr/local/
+  sudo: yes
+
+  

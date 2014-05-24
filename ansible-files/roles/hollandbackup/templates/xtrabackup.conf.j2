@@ -1,0 +1,28 @@
+[holland:backup]
+plugin = xtrabackup
+backups-to-keep = 1
+auto-purge-failures = yes
+purge-policy = after-backup
+estimated-size-factor = 0.2
+
+[xtrabackup]
+global-defaults = /etc/my.cnf
+innobackupex = innobackupex-1.5.1
+# ibbackup = "" # no default
+stream = tar
+apply-logs = yes
+slave-info = no
+safe-slave-backup = no
+no-lock = no
+# tmpdir = "" # no default
+additional-options = ,
+# pre-command = "" # no default
+
+[compression]
+method = gzip
+inline = yes
+options = ""
+level = 1
+
+[mysql:client]
+defaults-extra-file = ~/.my.cnf,
